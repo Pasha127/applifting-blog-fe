@@ -1,377 +1,138 @@
 import { emitLogOut } from "../../components/SocketManager/SocketManager";
+import axios from "axios";
+const baseURL = process.env.REACT_APP_SERVER_URL
 
 export const LOADING = "LOADING";
-export const SETTINGS = "SETTINGS";
-export const SEARCH_SETTINGS = "SEARCH_SETTINGS";
-export const GARAGE = "GARAGE";
-export const FILTERS = "FILTERS";
 export const SEARCH = "SEARCH";
 export const SET_USER_INFO = "SET_USER_INFO";
-export const SET_ASSET = "SET_ASSET";
-export const SET_CHATS = "SET_CHATS";
-export const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";
-export const SET_HISTORY = "SET_HISTORY";
-export const NEW_MESSAGE = "NEW_MESSAGE";
-export const SET_ONLINE = "SET_ONLINE";
-export const SET_RECENT_MSG = "SET_RECENT_MSG";
 export const SET_RESULTS = "SET_RESULTS";
 
-export const setLoading =isLoading =>({
+export const setLoading =isLoading =>({       // action creator for LOADING
     type:LOADING,
     payload: isLoading
   });
-export const setAsset = asset =>({
-    type:SET_ASSET,
-    payload:  asset
-  });
-export const setSettings =settingsData =>({
-    type:SETTINGS,
-    payload: settingsData
-  });
-export const setSearchSettings =settingsData =>({
-    type:SEARCH_SETTINGS,
-    payload: settingsData
-  });
-export const setGarage =isGarage =>({
-    type:GARAGE,
-    payload: isGarage
-  });
-export const setFilters = showFilters =>({
-    type:FILTERS,
-    payload: showFilters
-  });
-export const setSearch =query =>({
+
+export const setSearch =query =>({           // action creator for SEARCH
     type:SEARCH,
     payload: query
   });
-export const setSearchResults =result =>({
+export const setSearchResults =result =>({   // action creator for SET_RESULTS
     type:SET_RESULTS,
     payload: result
   });
-export const setUserInfo = user =>({
+export const setUserInfo = user =>({        // action creator for SET_USER_INFO
     type: SET_USER_INFO,
     payload: user
 });
-export const setChats = input =>({
-    type: SET_CHATS,
-    payload: input
-});
-export const setActiveChat = input =>({
-    type: SET_ACTIVE_CHAT,
-    payload: input
-});
-export const setHistory = input =>({
-    type: SET_HISTORY,
-    payload: input
-});
-export const newMessage = input =>({
-    type: NEW_MESSAGE,
-    payload: input
-});
-export const setOnline = input =>({
-    type: SET_ONLINE,
-    payload: input
-});
-export const setRecentMsg = input =>({
-    type: SET_RECENT_MSG,
-    payload: input
-});
 
 
-export const getChatByIdWithThunk = (id) =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'GET' ,
-      credentials:"include"
-      };      
-      const baseEndpoint = `${baseURL}/chat/${id}`
 
+
+
+export const getMeWithThunk = () =>{                                                   // get user info from server
       return async (dispatch, getState) =>{
-
-        const response = await fetch(baseEndpoint, options);
-       /*  console.log("get chat by id: ", response); */
-      if (response.ok) {
-        const data = await response.json()
-       /*  console.log("chat from ID: ", data); */
-        dispatch(setActiveChat(data));            
-      } else {
-       window.location.reload()
-      }             
-    }
-}
-export const getAssetByIdWithThunk = (id) =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'GET' ,
-      credentials:"include"
-      };      
-      const baseEndpoint = `${baseURL}/asset/${id}`
-
-      return async (dispatch, getState) =>{
-
-        const response = await fetch(baseEndpoint, options);
-       /*  console.log("get asset by id: ", response); */
-      if (response.ok) {
-        const data = await response.json()
-         console.log("asset from ID: ", data); 
-        dispatch(setAsset(data));            
-      } else {
-        dispatch(setAsset({}))
-      }             
-    }
-}
-
-
-export const deleteChatByIdWithThunk = (id) =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'DELETE' ,
-      credentials:"include"
-      };      
-      const baseEndpoint = `${baseURL}/chat/${id}`
-      return async (dispatch, getState) =>{
-        const response = await fetch(baseEndpoint, options);
-       /*  console.log("delete chat by id: ", response); */
-      if (response.ok) {
-       /*  console.log("chat from ID: ", data); */
-        dispatch(setActiveChat({}));            
-      } else {
-        alert("Error Encountered While Trying to Delete")
-      }             
-    }
-}
-export const deleteAssetByIdWithThunk = (id) =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'DELETE' ,
-      credentials:"include"
-      };      
-      const baseEndpoint = `${baseURL}/asset/${id}`
-      return async (dispatch, getState) =>{
-        dispatch(setLoading(true))
         try{
-        const response = await fetch(baseEndpoint, options);
-       /*  console.log("delete chat by id: ", response); */
+      const response = await axios.get(`${baseURL}/user/me`, {withCredentials:true})   // withCredentials:true is required for JWT Auth
       if (response.ok) {
-       /*  console.log("chat from ID: ", data); */
-        dispatch(setAsset({}));            
+        const data = await response.json()                                             // get the data from the response
+        dispatch(setUserInfo(data[0]));                                                // dispatch the action to set the user info
+        localStorage.setItem("loggedIn", true)                                         // set the local storage to logged in
       } else {
-        alert("Error Encountered While Trying to Delete")
-      }}
-      catch(error){
-        console.log(error)
-      }finally{dispatch(setLoading(false)); window.location.reload()}             
+        dispatch(logOutWithThunk()); 
+        console.log("error in get me");                                                // log failure
+      } 
+    }catch(error){
+      console.log("error in get me", error, error.response);                           // log the error
     }
 }
-
-export const getMeWithThunk = () =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'GET' ,
-      credentials:"include"
-      };      
-      const baseEndpoint = `${baseURL}/user/me`
-
-      return async (dispatch, getState) =>{
-
-        const response = await fetch(baseEndpoint, options);
-       /*  console.log("test get me", response); */
-      if (response.ok) {
-        const data = await response.json()
-        /* console.log("test resp", data); */
-        dispatch(setUserInfo(data[0]));
-        localStorage.setItem("loggedIn", true)            
-      } else {
-        dispatch(logOutWithThunk())
-      }             
-    }
 }
 
-export const getSearchResultsWithThunk = (query, queryOptions="limit=10&skip=0") =>{
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'GET' ,
-      credentials:"include"
-      };
-      let baseEndpoint = "";      
-      if(query) baseEndpoint = `${baseURL}/asset/search/${query}?${queryOptions}`
-      if(!query) baseEndpoint = `${baseURL}/asset?sort=createdAt`
 
-      return async (dispatch, getState) =>{
+export const getSearchResultsWithThunk = (query="", queryOptions="limit=10&skip=0") =>{   // get search results from server
+      let endpoint = "";                                                                  // set the endpoint to empty string
+      if(query) endpoint = `${baseURL}/asset/search/${query}?${queryOptions}`             // if there is a query, set the endpoint to sort with query options
+      if(!query) endpoint = `${baseURL}/asset?sort=createdAt`                             // if there is no query, set the endpoint to sort by createdAt
 
-        const response = await fetch(baseEndpoint, options);
+      return async (dispatch, getState) =>{                                               
+
+        const response = await axios.get(endpoint);                                      // get the response from the server
        /*  console.log("test get me", response); */
-      if (response.ok) {
-        const data = await response.json()
-        console.log("returned search results:", data)
-        dispatch(setSearchResults(data))
+      if (response.ok) {                                                                // check if the response is ok
+        const data = await response.json()                                              // get the data from the response
+        console.log("returned search results:", data)                                   // log the data
+        dispatch(setSearchResults(data))                                               // dispatch the action to set the search results
                    
       } else {
-        alert("Error while searching. Please try again.")
+        alert("Error while searching. Please try again.")                             // log failure
       }             
     }
 }
 
-export const logOutWithThunk = () =>{
-  
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'PUT' ,
-      credentials:"include",
-       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',         
-        } 
-      };      
-      const baseEndpoint = `${baseURL}/user/logout`
-      return async (dispatch, getState) =>{try{
-      const response = await fetch(baseEndpoint, options);
-      if (response.ok) {
-        
+export const logOutWithThunk = () =>{                                                  // log out user
+      const endpoint = `${baseURL}/user/logout`                                       // set the endpoint to logout
+      return async (dispatch, getState) =>{ 
+        try{
+      const response = await axios.put(endpoint);                                    //send log out request to the server 
+      if (response.ok) {                                                             // check if the response is ok
+        const data = await response.json()                                          // get the data from the response
+        console.log("logged out", data)                                             // log the data
       } else {
-        console.log("error logging out")
+        console.log("error logging out")                                            // log failure
       }
     }catch(error){
-      console.log(error)
+      console.log(error)                                                           // log the error
     };
-    emitLogOut();
-    dispatch(setUserInfo({}));
-    localStorage.removeItem("loggedIn")            
+    dispatch(setUserInfo({}));                                                     // dispatch the action to client side user info with empty object
+    localStorage.removeItem("loggedIn")                                            // remove the local storage log in check
 }}
 
-export const logInWithThunk =  (email, password) =>{
-
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'PUT' ,
-       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',         
-        } ,
-        body:JSON.stringify({email,password})
-      };      
-      const baseEndpoint = `${baseURL}/user/login`
-      return async (dispatch, getState) =>{  try{
-      const response = await fetch(baseEndpoint, options);
-      if (response.ok) {
-        const data = await response.json()
-        dispatch(setUserInfo(data));
-        getMeWithThunk()
+export const logInWithThunk =  (email, password) =>{                               // log in user
+      const endpoint = `${baseURL}/user/login`                                     // set the endpoint to login
+      return async (dispatch, getState) =>{  
+        try{
+      const response = await axios.post(endpoint, {email,password});             // send the login request to the server
+      if (response.ok) {                                                         // check if the response is ok
+        const data = await response.json()                                       // get the data from the response
+        dispatch(setUserInfo(data));                                             // dispatch the action to set the user info
       } else {
-        console.log("Error logging in.")
+        console.log("Error logging in.")                                         // log failure
       }
     }catch(error){
-      console.log(error)
-    }
-    dispatch(setUserInfo({}));            
+      console.log(error)                                                         // log the error
+    }           
 }}
 
-export const registerWithThunk =  (newUserData) =>{
-  
-  const baseURL = process.env.REACT_APP_SERVER_URL
-    const options = {
-      method: 'POST' ,
-       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',         
-        } ,
-        body:JSON.stringify(newUserData)
-      };      
-      const baseEndpoint = `${baseURL}/user/register`
-      return async (dispatch, getState) =>{try{
-      const response = await fetch(baseEndpoint, options);
-      if (response.ok) {
-        const data = await response.json()
-        dispatch(setUserInfo(data));
+export const registerWithThunk =  (newUserData) =>{                               // register new user
+      const endpoint = `${baseURL}/user/register`                                 // set the endpoint to register 
+      return async (dispatch, getState) =>{ 
+        try{
+      const response = await axios.post(endpoint, {newUserData});                 // send the register request to the server
+      if (response.ok) {                                                          // check if the response is ok
+        const data = await response.json()                                       // get the data from the response
+        dispatch(setUserInfo(data));                                            // dispatch the action to set the user info
       } else {
-        console.log("error logging out")
+        console.log("error logging out")                                      // log failure
       }
     }catch(error){
-      console.log(error)
-    }finally{window.location.reload()}
-   dispatch( setUserInfo({}));            
+      console.log(error)                                                      // log the error
+    }finally{window.location.reload()}                                        // reload the page           
 }}
 
-export const getHistoryWithThunk = () => {
-  const baseURL = process.env.REACT_APP_SERVER_URL
-  const options = {
-    method: 'GET' ,
-    credentials:"include"
-  };      
-  const baseEndpoint = `${baseURL}/chat/me/history`
-  /* console.log("fetch blogs") */
-  return async (dispatch, getState) =>{
-    const response = await fetch(baseEndpoint, options);
-    /* console.log("test get me", response); */
-    if (response.ok) {
-      const data = await response.json()
-      /* console.log("get all chats", data); */
-      dispatch(setHistory(data))            
-    } else {
-      console.log("Error - Could not retrieve chats!") 
-    }             
-  }}
-  
-  export const uploadAssetWithThunk =  (assetData) =>{
 
-    const baseURL = process.env.REACT_APP_SERVER_URL
-    let formData = new FormData();
-    formData.append('model', assetData.model);
-    formData.append('name', assetData.name);
-    formData.append('type', assetData.type);
-    formData.append('poster', assetData.poster);
-    formData.append('description', assetData.description);
-    formData.append('keywords', assetData.keywords);
-    
-    const options = {
-    method: 'POST',
-    credentials:"include",    
-    body: formData
-    };   
-    
-    const assetEndpoint = `${baseURL}/asset`
-    return async (dispatch, getState) =>{
-      try {    
-        const response = await fetch(assetEndpoint, options);
-        if (response.ok) {           
-          const data = await response.json() 
-          console.log("Uploaded Asset: ", data)
-          window.location= `http://www.3Depot.org/Garage?asset=${data}`
-       } else {
-         alert('Error Uploading Asset')
-       } 
-      } catch (error) {
-        console.log(error)
-      }finally{}
-     ;            
-  }}
-
-  export const sendCommentWithThunk =  (comment,id) =>{
-  
-    const baseURL = process.env.REACT_APP_SERVER_URL
-      const options = {
-        method: 'POST' ,
-        credentials:"include",
-         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',         
-          } ,
-          body:JSON.stringify(comment)
-        };      
-        const baseEndpoint = `${baseURL}/comment/${id}`
-        return async (dispatch, getState) =>{try{
-          console.log("sentComment",comment,id)
-        const response = await fetch(baseEndpoint, options);
-        if (response.ok) {
-          const data = await response.json()
-          console.log(data);
-          dispatch(setAsset(data));
+ export const sendCommentWithThunk =  (comment,id) =>{                           // send comment to server
+        const endpoint = `${baseURL}/comment/${id}`                            // set the endpoint to send comment
+        return async (dispatch, getState) =>{
+          try{
+          console.log("sentComment",comment,id)                              // log the comment and id
+        const response = await axios.post(endpoint, {comment});              // send the comment to the server
+        if (response.ok) {                                                 // check if the response is ok
+          const data = await response.json()                             // get the data from the response
+          console.log(data);                                           // log the data
         } else {
-          console.log("error uploading comment")
+          console.log("error uploading comment")                     // log failure
         }
       }catch(error){
-        console.log(error)
+        console.log(error)                                            // log the error
       }
-               
-  }}
+}}
   

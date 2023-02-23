@@ -8,6 +8,10 @@ import { getMeWithThunk } from "../src/lib/redux/actions";
 import PrivateRoutes from "./lib/tools/PrivateRoutes";
 import SocketManager from "./components/SocketManager/SocketManager";
 import Loader2D from "./components/loader/Loader2D";
+import MyArticles from "./components/myArticles/MyArticles";
+import CreateArticle from "./components/createArticle/CreateArticle";
+import Home from "./components/home/Home";
+
 const mapStateToProps = state => {
   return {
   user: state.userInfo,   // This is the user object which holds all the user info
@@ -30,7 +34,7 @@ function App(props) {
     <SocketManager/> {/*  This is the component that manages the socket connection */}
       <Routes>
         <Route element={<PrivateRoutes />}> {/* // This is the component that manages the private routes */}
-                <Route element={<MyArticles/>} path="/MyArticles"/> {/* // This is a private route to the MyArticles component */}
+                <Route element={<MyArticles/>} path="/MyArticles"/> {/* // This is a private route to the MyArticles component */} 
                 <Route element={<CreateArticle/>} path="/Create"/> {/* // This is a private route to the CreateArticle component */}
         </Route>
         <Route path='/' exact element={<Home/>}/> {/* // This is a public route to the landing page */}
