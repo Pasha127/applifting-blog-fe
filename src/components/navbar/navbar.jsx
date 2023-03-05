@@ -23,30 +23,12 @@ const GeneralNavBar = (props) => {
 /*   const goToChat = () => navigate("/Chat") */
 
   return (<>
-    <Navbar expand="lg" className="search-navbar" fixed="top">
-      <div className="nav-container">
-        <div className="nav-left">
+    <Navbar expand="lg" fixed="top">
+     
         <Navbar.Brand as={Link} to="/">
           <img className="blog-navbar-brand" alt="logo" src={logo} />
         </Navbar.Brand>
-        </div>
-        <div className="page-nav">
-        <Button className="filters-btn holo-nav-btn" variant="primary" 
-          onClick={()=>props.setFilters(!props.showFilters)}
-          ></Button>
-        {props.user?._id && <div className="user-only-nav">
-        <Button className="garage-btn holo-nav-btn" variant="primary" 
-          onClick={()=>{}}                                                    //must add functionality
-          >Garage</Button>
-        <Button className="chat-btn holo-nav-btn" variant="primary" 
-          onClick={()=>{}}                                                   //must add functionality
-          >Chat</Button>
-          </div>}
-          </div>
-        <div className="hamburger-zone">
-          <UserDropdown/>
-        </div>
-      </div>
+      
     </Navbar>
   </>);
 };
