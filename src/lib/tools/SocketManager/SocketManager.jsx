@@ -2,20 +2,13 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {io} from "socket.io-client";
-import { getMeWithThunk, setActiveChat, setLoading, setOnline, setRecentMsg } from "../../lib/redux/actions";
+import { getMeWithThunk, setLoading } from "../../redux/actions";
 export const socket = io(process.env.REACT_APP_SERVER_URL, {transports:["websocket"], withCredentials:true})
 socket.connect()
 
 
 
-export const joinRoom = (otherId, relevantChat) =>{ 
-    /*  console.log("person to join: ", otherId); */
-     socket.emit("joinRoom", {chatRoomId:relevantChat._id})
-   }
 
-export const emitLogOut = ()=>{
-    socket.emit("logOut");
-  }
 
 export const sendInitialMessage = (user, otherUser) => {
     /* console.log("initial members",[user,otherUser]) */
@@ -33,17 +26,11 @@ export const sendInitialMessage = (user, otherUser) => {
       socket.emit("sendMessage", { message: newMessage }) 
     }
 
-export const submitUsername = (userId, emailAddress) => {
-   /*  console.log("Submission",userId,emailAddress); */
-    socket.emit("setUsername", {_id:userId, username: emailAddress.split("@")[0] })
-}
+
 
 const mapStateToProps = state => {
     return {
     user: state.userInfo,
-    activeChat: state.chats.active,
-    onlineUsers: state.onlineUsers,
-    messageHistory: state.chats.active.messages,
     isLoading: state.isLoading
     };
   };
@@ -52,15 +39,6 @@ const mapStateToProps = state => {
     return {
       getMe: ()=> {
         dispatch(getMeWithThunk());
-      },
-      setUsersRedux: (users)=> {
-        dispatch(setOnline(users));
-      },
-      setReduxChatHistory: (chat)=>{
-        dispatch(setActiveChat(chat))
-      },                  
-      setRecentMesg: (chat)=>{
-        dispatch(setRecentMsg(chat))
       },
       setLoading: (loadBool)=>{
         dispatch(setLoading(loadBool))
@@ -73,14 +51,9 @@ const SocketManager = (props)=>{
         useEffect(() => {
           props.getMe()
         }, []);
-        useEffect(()=>{
-          const {_id,email} = props.user
-            props.setUsersRedux(["TESING"]);
-             /* console.log('sent userdata',_id,email)  */
-            props.user._id && submitUsername(_id,email)   
+        useEffect(()=>{  
             socket.on("welcome", welcomeMessage => {
-             /* console.log(welcomeMessage);  */
-              
+             /* console.log(welcomeMessage);  */              
             });
         },[props.user._id])
 

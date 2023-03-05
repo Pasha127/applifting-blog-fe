@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import LogIn from './components/log-in/logIn';
+import LogIn from './components/logIn/LogIn';
 import { getMeWithThunk } from "../src/lib/redux/actions";
 import PrivateRoutes from "./lib/tools/PrivateRoutes";
-import SocketManager from "./components/SocketManager/SocketManager";
-import Loader2D from "./components/loader/Loader2D";
+import SocketManager from "./lib/tools/SocketManager/SocketManager";
 import MyArticles from "./components/myArticles/MyArticles";
 import CreateArticle from "./components/createArticle/CreateArticle";
 import Home from "./components/home/Home";
+import Preloader from "./components/preloader/Preloader";
+import Navbar from "./components/navbar/navbar";
 
 const mapStateToProps = state => {
   return {
@@ -34,14 +35,14 @@ function App(props) {
     <SocketManager/> {/*  This is the component that manages the socket connection */}
       <Routes>
         <Route element={<PrivateRoutes />}> {/* // This is the component that manages the private routes */}
-                <Route element={<MyArticles/>} path="/MyArticles"/> {/* // This is a private route to the MyArticles component */} 
-                <Route element={<CreateArticle/>} path="/Create"/> {/* // This is a private route to the CreateArticle component */}
+                {/* <Route element={<MyArticles/>} path="/MyArticles"/> */} {/* // This is a private route to the MyArticles component */} 
+                {/* <Route element={<CreateArticle/>} path="/Create"/> */} {/* // This is a private route to the CreateArticle component */}
         </Route>
         <Route path='/' exact element={<Home/>}/> {/* // This is a public route to the landing page */}
         <Route path="/LogIn" exact element={<LogIn/>} /> {/* // This is a public route to the LogIn component */}
       </Routes>
     </Router>
-    {props.isLoading && <Loader2D/>} {/* // This is the loader that is shown when the app is loading */}
+    {props.isLoading && <Preloader/>} {/* // This is the loader that is shown when the app is loading */}
      </>);
 }
 

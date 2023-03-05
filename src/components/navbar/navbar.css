@@ -1,0 +1,81 @@
+.blog-navbar-brand {
+    width: 50px;
+}
+.nav-container{
+      background-color: var(--bs-gray-400);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-inline: 20px;
+  }
+  .hamburger-zone{
+    display: flex;
+    align-items: center;
+  }  
+  .search-navbar {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid gray;
+    height: 80px;
+    z-index: 30;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+  }
+  
+.logoContainer{
+    background-color: var(--bg-color);
+    height:50px;
+  }
+  .logo{
+    background-image: url("../../lib/assets/UpShiba.png");
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    background-size: contain;
+  }
+  .page-nav{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-right: auto;
+    flex-shrink: 0;
+  }
+  .buttons-container{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 38px;
+  }
+  .nav-left{
+    display: flex;
+    flex-direction: row;
+  }
+  .navbar-brand{
+    display: flex;
+    align-items: center;
+   }
+    @media(max-width: 290px){
+     .navbar-brand{
+      display: none;
+     }
+     .user-only-nav .holo-nav-btn{
+      display: none;
+     }
+    }
+  @media (max-width: 660px){
+    .search-form-container{
+        width: 100%;
+        margin-top: 15px;
+        justify-content: left;
+    }
+    .user-only-nav{
+      display: none;
+    }
+    .navbar{
+    }
+  }
+    
