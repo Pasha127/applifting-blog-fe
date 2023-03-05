@@ -1,0 +1,52 @@
+.cover-pic{
+    height: 256px;
+    width: 256px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.preview-content{
+    margin-left: 20px;
+}
+.vote-space{
+    position: absolute;
+    opacity: 0;
+    width: 256px;
+    height: 256px;
+    border-radius: 4px;
+    transition: opacity .3s;
+    display: flex;
+    flex-direction: column;
+}
+.vote-space:hover{
+    opacity: 1;
+    background-color: rgba(90, 90, 90, .5);
+    transition: opacity .3s;
+}
+.votes-container{
+    height: 30%;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.votes-number{
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.upvote-btn{
+    height: 60px;
+    width: 60px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+.downvote-btn{
+    height: 60px;
+    width: 60px;
+    padding: 0;
+    border: none;
+    background: none;
+}
