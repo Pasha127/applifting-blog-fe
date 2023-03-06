@@ -6,8 +6,10 @@ import { getMeWithThunk, setLoading } from "../../lib/redux/actions";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { Person } from "react-bootstrap-icons";
+import { Person, PersonFillAdd } from "react-bootstrap-icons";
 import Navbar from "../navbar/navbar";
+import ShibaCanvas from "../shibaCanvas/ShibaCanvas";
+
 
 const mapStateToProps = state => {
   return {
@@ -185,16 +187,14 @@ const handleLogIn = async (e) =>{
 
 
   return (<> 
-    <Navbar/>   
-    <div className="background-gears gear2"></div>
-    <div className="background-gears gear3"></div>
-    <div className="background-gears gear4"></div>
-    <div className="background-gears gear5"></div>
+    <Navbar/>
+    <div className="canvas-container">
+      <ShibaCanvas/>
+      </div>   
     <Container className="new-blog-container mt-0">      
       {wantLogIn? 
-      <div className="log-in-box holo-blue-alpha-bg">
+      <div className="log-in-box ">
         <Form>
-        <div className="login-logo" onClick={goToSearch}></div>
         <Form.Group controlId="Email" className="mt-1 col-12">
             <Form.Label>Email</Form.Label>
           <Form.Control size="lg" placeholder="Email" ref={emailRef} />
@@ -204,7 +204,7 @@ const handleLogIn = async (e) =>{
           <Form.Control size="lg" type="password" placeholder="Password" ref={passwordRef} />
           </Form.Group> 
             <Form.Group className="mt-4 mb-1  col-12 justify-content-around d-flex">
-        <Button className="holo-blue-btn w-120" variant="primary"
+        <Button className="w-120" variant="primary"
         onClick={(e) => {handleLogIn(e);}}
         type="submit"
         size="lg"
@@ -223,10 +223,10 @@ const handleLogIn = async (e) =>{
         </Form>
       </div>
       
-      :<Form className="mt-5 register-box holo-blue-alpha-bg">       
+      :<Form className=" register-box ">       
           <div className="d-flex justify-content-center">
             <div className="p-0 d-flex pic-space">
-        <label className="uploaded-pic" htmlFor="avatarUploadBtn">{!avatar ? <Person/>:<img className="uploaded-pic" src={avatarDataURL} alt="avatar"/>}</label>
+        <label className="uploaded-pic" htmlFor="avatarUploadBtn">{!avatar ? <PersonFillAdd style={{fontSize:"4rem"}}/>:<img className="uploaded-pic" src={avatarDataURL} alt="avatar"/>}</label>
                           <input type="file" className="d-none" id="avatarUploadBtn"
                           onChange={(e)=>{readAvatar(e)}}></input>
                           </div>
@@ -260,7 +260,7 @@ const handleLogIn = async (e) =>{
         Back
           </Button>
         <Button
-        className="holo-blue-btn w-120" 
+        className=" w-120" 
             onClick={(e) => handleSubmit(e)}
             type="submit"
             size="lg"
@@ -271,13 +271,13 @@ const handleLogIn = async (e) =>{
           </Form.Group>         
       </Form>}
     
-    <div className="d-flex flex-wrap justify-content-center mt-5">
+    <div className="auth-button-container d-flex flex-wrap justify-content-center mt-5">
     <a href={`${process.env.REACT_APP_SERVER_URL}/user/googleLogin`}>
     <Button
             onClick={()=>{
               /* props.getMe(); */
             }}
-            className="oauth-button holo-blue-btn"
+            className="oauth-button "
             size="lg"
             variant="primary"            
             >

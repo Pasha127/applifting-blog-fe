@@ -5,7 +5,6 @@ import logo from "../../lib/assets/UpShiba.png";
 import { connect } from "react-redux";
 import "./navbar.css";
 import { logOutWithThunk } from "../../lib/redux/actions";
-import UserDropdown from "../userDropdown/UserDropdown";
 const mapStateToProps = state => {
   return {
     user: state.userInfo
