@@ -28,11 +28,11 @@ const mapStateToProps = state => {
 
 
 const LogIn = (props) => {
-  const baseURL = process.env.REACT_APP_SERVER_URL
-  const navigate = useNavigate()
-  const goToSearch = ()=> navigate("/", {replace: true})
-  const usernameRef = useRef()
-  const lastNameRef = useRef();
+  const baseURL = process.env.REACT_APP_SERVER_URL                                          // this is the base URL for the backend
+  const navigate = useNavigate()                                                         // this is a hook from react-router-dom that allows you to navigate to a different page
+  const goToSearch = ()=> navigate("/", {replace: true})                                // this is a function that will navigate to the search page
+  const usernameRef = useRef()                                                         // this is a hook from react that allows you to access the value of username input field
+  const lastNameRef = useRef(); 
   const firstNameRef = useRef();
   const passwordRef = useRef();
   const emailRef = useRef();
