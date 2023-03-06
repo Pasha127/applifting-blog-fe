@@ -1,0 +1,192 @@
+.new-blog-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .new-blog-content {
+    height: 400px;
+    margin-bottom: 80px;
+    
+  }
+  .pic-space{
+    height: 100px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid gray;
+    border-radius: 50%;
+    background-color: #ffffff;
+  }
+  .uploaded-pic{
+    max-width: 100%;
+    position: relative;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  
+  }
+  .log-in-box{
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    border-radius: 10px;
+    border: none;
+    padding: 20px;
+    max-width: 800px;
+  }
+
+  .background-gears{
+    position: absolute;  
+    height: 500px;
+    width: 500px;
+    background-image: url("../../lib/assets/UpShiba.png");
+    background-position: center;
+    opacity: .8;
+    left: calc(50vw - 250px);
+    z-index: -1;
+    top:180px;
+    animation: rotateGear 480s linear 0s infinite normal both;
+
+  }  
+  @keyframes rotateGear {
+    100% {transform: rotate(360deg);}
+  }
+  @keyframes rotateGear2 {
+    0%  {transform: rotate(30deg);}
+    100% {transform: rotate(390deg);}
+  }
+
+  .oauth-button{
+ 
+    height: 50px;
+    z-index: 5;
+    margin-bottom: 90px;
+  }  
+  .background4button{
+    background-color: #ffffff;
+    transform: translateY(40px);
+    border-radius: 8px;
+    
+  }
+
+.register-box{
+    border-radius: 10px;
+    border: none;
+    padding: 20px;
+    background-color: #ffffff;
+}
+.gear3,.gear4,.gear5,.gear2{
+    opacity: 0;
+    display: none;
+}
+
+.login-logo{
+        height: 100px;
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        background-image: url("../../lib/assets/UpShiba.png");
+        background-position: center;
+        opacity: 1;
+        display: flex;
+        background-size:contain; 
+        background-repeat: no-repeat;
+        cursor: pointer;
+}
+@media (min-width: 470px) {
+  .log-in-box{
+    margin-top: 200px;
+  }}
+  @media (min-width: 1000px) {
+    .gear2{
+        position: absolute;
+        transform: rotate(70deg);  
+        height: 400px;
+        width: 400px;
+        background-image: url("../../lib/assets/UpShiba.png");
+        background-position: center;
+        opacity: .6;
+        left: calc(10vw);
+        z-index: -1;
+        top: 0px;
+        animation: rotateGear 400s linear 0s infinite reverse both;
+        background-size:contain; 
+        background-repeat: no-repeat;
+}
+.gear3{
+        position: absolute;  
+        height: 250px;
+        width: 250px;
+        background-image: url("../../lib/assets/DownShiba.png");
+        background-position: center;
+        opacity: .4;
+        left: 60vw;
+        z-index: -1;
+        top:10px;
+        animation: rotateGear 60s linear 0s infinite normal both;
+        background-size:contain; 
+        background-repeat: no-repeat;
+}
+.gear4{
+        position: absolute;  
+        height: 300px;
+        width: 300px;
+        background-image: url("../../lib/assets/DownShiba.png");
+        background-position: center;
+        opacity: .4;
+        left: 65vw;
+        z-index: -1;
+        top:400px;
+        animation: rotateGear2 200s linear 0s infinite reverse both;
+        background-size:contain; 
+        background-repeat: no-repeat;
+}
+.gear5{
+        position: absolute;  
+        height: 100px;
+        width: 100px;
+        background-image: url("../../lib/assets/UpShiba.png");
+        background-position: center;
+        opacity: .4;
+        left: 25vw;
+        z-index: -1;
+        top:500px;
+        animation: rotateGear 30s linear 0s infinite normal both;
+        background-size:contain; 
+        background-repeat: no-repeat;
+}
+.gear3,.gear4,.gear5,.gear2{
+  display: flex;
+}
+  }
+
+  body{
+    overflow-y: auto;
+    background-color: var(--bg-color);
+  }
+
+.holo-blue-alpha-bg{
+      background-color: var(--holo-blue-alpha);
+    }
+    .holo-blue-bg{
+      background-color: var(--holo-blue);
+    }
+.holo-blue-btn{
+  background-color: var(--holo-blue);
+  border: none;
+  
+}
+.holo-blue-alpha-btn{
+  background-color: var(--holo-blue-alpha);
+  border: none;
+
+}
+.w-120{
+  width: 120px;
+}

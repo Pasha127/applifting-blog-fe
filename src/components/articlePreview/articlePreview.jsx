@@ -12,14 +12,14 @@ const ArticlePreview = (props) => {
         <div className="d-flex mb-4">
             <img className="cover-pic" src={article.image} alt="article cover"/>
             <div className="vote-space">
+                <div className="votes-container">
+                    <button className="vote-btn">
+                        <img src={upDog} alt="upvote button"  height="60" width="60"/>
+                    </button>
                 <div className="votes-number">
                     <h3>{article.votes}</h3>
                 </div>
-                <div className="votes-container">
-                    <button className="upvote-btn">
-                        <img src={upDog} alt="upvote button"  height="60" width="60"/>
-                    </button>
-                    <button className="downvote-btn">
+                    <button className="vote-btn">
                         <img src={downDog} alt="downvote button"  height="60" width="60"/>
                     </button>
                 </div>

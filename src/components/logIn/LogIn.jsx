@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Person } from "react-bootstrap-icons";
+import Navbar from "../navbar/navbar";
 
 const mapStateToProps = state => {
   return {
@@ -183,7 +184,8 @@ const handleLogIn = async (e) =>{
 
 
 
-  return (<>    
+  return (<> 
+    <Navbar/>   
     <div className="background-gears gear2"></div>
     <div className="background-gears gear3"></div>
     <div className="background-gears gear4"></div>
